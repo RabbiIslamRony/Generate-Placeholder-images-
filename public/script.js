@@ -1,49 +1,58 @@
-function handleFiles(files) {
-    const file = files[0];
-  
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
-  
-      fetch('/upload', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => response.json())
-      .then(data => {
-        const resultDiv = document.getElementById('result');
-        
-        // Display the placeholder image with the original image size
-        const placeholderImage = new Image();
-        placeholderImage.src = `data:image/png;base64,${data.placeholderBase64}`;
-        placeholderImage.alt = 'Placeholder Image';
-        placeholderImage.width = data.originalSize.width;
-        placeholderImage.height = data.originalSize.height;
-  
-        // Create a div to hold the image and size information
-        const imageContainer = document.createElement('div');
-        imageContainer.appendChild(placeholderImage);
-  
-        // Display the original image size
-        const sizeInfo = document.createElement('p');
-        sizeInfo.textContent = `Original Image Size: ${data.originalSize.width} x ${data.originalSize.height}`;
-        imageContainer.appendChild(sizeInfo);
-  
-        // Replace the content of the result div
-        resultDiv.innerHTML = '';
-        resultDiv.appendChild(imageContainer);
-  
-        // Create a download button for the placeholder image
-        const downloadButton = document.createElement('button');
-        downloadButton.textContent = 'Download Placeholder Image';
-        downloadButton.addEventListener('click', () => {
-          downloadPlaceholderImage(data.placeholderBase64);
+function handleFiles() {
+    const input = document.getElementById('image');
+    const files = input.files;
+
+    if (files.length > 0) {
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('images', files[i]);
+        }
+
+        // Show loading message
+        const loadingMessage = document.getElementById('loading-message');
+        loadingMessage.style.display = 'block';
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            const zip = new JSZip();
+
+            data.forEach((imageData, index) => {
+                const base64Data = imageData.placeholderBase64.split(';base64,').pop();
+                zip.file(`placeholder_${index + 1}.png`, base64Data, { base64: true });
+            });
+
+            zip.generateAsync({ type: 'blob' })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'placeholders.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+
+                // Hide loading message after generating placeholders
+                loadingMessage.style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error generating zip file:', error);
+                // Hide loading message in case of an error
+                loadingMessage.style.display = 'none';
+            });
+        })
+        .catch(error => {
+            console.error('Error uploading images:', error);
+            // Hide loading message in case of an error
+            loadingMessage.style.display = 'none';
         });
-        resultDiv.appendChild(downloadButton);
-      })
-      .catch(error => console.error('Error uploading image:', error));
     }
-  }
+}
   
   function downloadPlaceholderImage(base64Data) {
     const blob = base64toBlob(base64Data, 'image/png');
@@ -56,6 +65,22 @@ function handleFiles(files) {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
+  }
+  
+  function downloadAllPlaceholders() {
+    fetch('/download-all')
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'placeholders.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(error => console.error('Error downloading placeholders:', error));
   }
   
   // Helper function to convert base64 to blob

@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image Placeholder Generator</title>
 </head>
 <body>
-  <div id="drop-area">
-    <h3 class="drop-text">Drag and drop an image here</h3>
-    <input type="file" id="fileElem" accept="image/*" onchange="handleFiles(this.files)">
-  </div>
+  <h1>Image Placeholder Generator</h1>
+  <div id="loading-message" style="display: none;">Loading...</div>
+  <form id="uploadForm">
+    <label for="image">Choose image(s):</label>
+    <input type="file" id="image" name="images" accept="image/*" multiple>
+    <button type="button" onclick="handleFiles()">Generate Placeholder</button>
+  </form>
   <div id="result"></div>
-
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.6.0/dist/jszip.min.js"></script>
   <script src="script.js"></script>
+  
 </body>
 </html>
