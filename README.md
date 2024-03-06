@@ -12,8 +12,8 @@ This web application allows you to generate image placeholders based on the dime
 - [Deployment](#deployment)
 - [Installation and Local Development](#installation-and-local-development)
 - [Dependencies](#dependencies)
-- [Placeholder Limitations](#Limitations)
-- [How to Address Limitations](#Address-Limitations)
+- [Placeholder Limitations](#user-content-placeholder-limitations)
+- [How to Address Limitations](#how-to-address-limitations)
 - [Contributing](#contributing)
 - [License](#license)
 
