@@ -57,7 +57,7 @@ npm install
 ```bash
 npm start
 
-Open your browser and go to http://localhost:3000.
+## Open your browser and go to http://localhost:3000.
 
 - [Dependencies
   - Express: Web framework for Node.js.
