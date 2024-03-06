@@ -52,7 +52,7 @@ This application is deployed on [Vercel](https://vercel.com/) for easy access. Y
     ```bash
     npm install
 
-_##  Start the server:_
+##  Start the server:_
 
     ```bash
     npm start
@@ -66,13 +66,13 @@ _##  Start the server:_
   - Jimp: Image processing library.
   - JSZip: Library for creating zip files.
 
-#### Contributing_
+### Contributing
 Contributions are welcome! If you encounter any issues or have suggestions, please feel free to:
 
 - Open an issue
 - Submit a pull request
 
-## License_
+## License
 This project is licensed under the MIT License.
 
 Happy image generating!
