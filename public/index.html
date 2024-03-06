@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Placeholder Generator</title>
+</head>
+<body>
+  <div id="drop-area">
+    <h3 class="drop-text">Drag and drop an image here</h3>
+    <input type="file" id="fileElem" accept="image/*" onchange="handleFiles(this.files)">
+  </div>
+  <div id="result"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
