@@ -49,29 +49,30 @@ This application is deployed on [Vercel](https://vercel.com/) for easy access. Y
 
 ## 1 Install dependencies:
 
-```bash
-npm install
+    ```bash
+    npm install
 
-## 2 Start the server:
+_##  Start the server:_
 
-```bash
-npm start
+    ```bash
+    npm start
 
-## Open your browser and go to http://localhost:3000.
 
-- [Dependencies
+### Open your browser and go to http://localhost:3000._
+
+- Dependencies
   - Express: Web framework for Node.js.
   - Multer: Middleware for handling file uploads.
   - Jimp: Image processing library.
   - JSZip: Library for creating zip files.
 
-## Contributing
+#### Contributing_
 Contributions are welcome! If you encounter any issues or have suggestions, please feel free to:
 
 - Open an issue
 - Submit a pull request
 
-## License
+## License_
 This project is licensed under the MIT License.
 
 Happy image generating!
